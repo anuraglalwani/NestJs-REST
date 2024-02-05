@@ -8,11 +8,13 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateNinjaDto } from './dto/create-ninja.dto';
 import { UpdateNinjaDto } from './dto/update-ninja.dto';
 import { NinjasService } from './ninjas.service';
+import { BeltGuard } from 'src/belt/belt.guard';
 
 // behind the scenes, insted of below we use constructor and @enjectable
 
@@ -42,6 +44,7 @@ export class NinjasController {
 
   // POST /ninjas -> {}
   @Post()
+  @UseGuards(BeltGuard)
   createNinja(@Body(new ValidationPipe()) createNinjaDto: CreateNinjaDto) {
     return this.service.create(createNinjaDto);
   }
